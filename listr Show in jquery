@@ -1,0 +1,237 @@
+
+@model IEnumerable<JQWidgets.Models.Supplier>
+@{
+    ViewBag.Title = "Supplier Entry / List";
+}
+<!-- FOR ANGULAR DATA TABLE -->
+
+
+<header class="page-header">
+    <h2>Supplier Entry / List</h2>
+</header>
+<h1 style=""></h1>
+<!--Error messages will be shown here-->
+
+
+@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+<!-- start: Supplier Entry  page -->
+<section class="panel" ng-app="ngApp" ng-controller="ngCtrl">
+    <form name="SupplierForm">
+        <span ng-init="GetSupInfo()"></span>
+        <div class="panel-body">
+            <div class="row">
+
+
+                <div id="grid">
+                </div>
+                <div style="margin-top: 30px;">
+                    <input type="button" id="saveState" value="Save State" />
+                    <input type="button" id="loadState" value="Load State" />
+                </div>
+
+
+
+            </div>  <!-- ng-init End-->
+        </div>
+    </form>
+</section>
+@section scripts {
+    @*<script type="text/javascript">
+            $(document).ready(function () {
+            // prepare the data
+            var source =
+            {
+            dataType: "json",
+            dataFields: [
+            { name: 'SupplierId', type: 'number' },
+            { name: 'SupplierName', type: 'string' },
+            { name: 'SupplierAddress', type: 'string' },
+            { name: 'SupplierMobile', type: 'string' },
+
+            ],
+            //id: 'EmployeeID',
+            url: '/Supplier/GetSupplierList'
+            };
+            var dataAdapter = new $.jqx.dataAdapter(source);
+            // create Tree Grid
+            $("#dataTable").jqxDataTable(
+            {
+            width: 850,
+            source: dataAdapter,
+            theme: 'arctic',
+            pageSize: 5,
+            sortable: true,
+            filterable: true,
+            pageable: true,
+            columns: [
+            { text: 'FirstName', dataField: 'SupplierId', width: 200 },
+            { text: 'LastName', dataField: 'SupplierName', width: 200 },
+            { text: 'Title', dataField: 'SupplierAddress', width: 160 },
+            { text: 'SupplierMobile', dataField: 'SupplierMobile', cellsFormat: 'd', width: 120 },
+            ]
+            });
+            });
+        </script>*@
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            // var url = '/Supplier/GetSupplierList'
+            // prepare the data
+            var source =
+            {
+                datatype: "json",
+                datafields: [
+                    { name: 'SupplierName', type: 'string' },
+                    { name: 'Email', type: 'string' },
+                    { name: 'Mobile', type: 'string' },
+                    { name: 'countrySName', type: 'string' },
+                    { name: 'CountryId', type: 'string' },
+                    { name: 'Address', type: 'string' },
+                    { name: 'AccId', type: 'string' },
+
+                ],
+                //root: "entry",
+                //record: "content",
+                //id: 'm\\:properties>d\\:SupplierId',
+                url: '/Supplier/GetSupplierList',
+                //pager: function (pagenum, pagesize, oldpagenum) {
+                //    // callback called when a page or page size is changed.
+                //}
+            };
+            //var sourceJson = JSON.parse(source);
+            var dataAdapter = new $.jqx.dataAdapter(source);
+            $("#grid").jqxGrid(
+            {
+                width: getWidth('Grid'),
+                source: source,
+                selectionmode: 'multiplerowsextended',
+                //sortable: true,
+                //pageable: true,
+                //autoheight: true,
+                //autoloadstate: false,
+                //autosavestate: false,
+                columnsresize: true,
+                columnsreorder: true,
+                showfilterrow: true,
+                filterable: true,
+                scrollmode: 'deferred',
+                deferreddatafields: ['SupplierName', 'Email', 'Mobile', 'countrySName', 'CountryId', 'Address', 'AccId'],
+                columns: [
+                  { text: 'Supplier Name', filtercondition: 'starts_with', datafield: 'SupplierName', width: 250, rendered: tooltiprenderer },
+                  { text: 'Email', datafield: 'Email', width: 200, rendered: tooltiprenderer },
+                  { text: 'Supplier Mobile', datafield: 'Mobile', width: 150, rendered: tooltiprenderer },
+                  { text: 'countrySName', datafield: 'countrySName', width: 200, rendered: tooltiprenderer },
+                  { text: 'CountryId', datafield: 'CountryId', rendered: tooltiprenderer },
+                  { text: 'Address', datafield: 'Address', width: 200, rendered: tooltiprenderer },
+                { text: 'AccId', datafield: 'AccId', rendered: tooltiprenderer }
+                ]
+            });
+            var tooltiprenderer = function (element) {
+                alert($(element).text());
+                $(element).jqxTooltip({ position: 'mouse', content: $(element).text() });
+            }
+            $("#saveState").jqxButton({ theme: theme });
+            $("#loadState").jqxButton({ theme: theme });
+            var state = null;
+            $("#saveState").click(function () {
+                // save the current state of jqxGrid.
+                state = $("#grid").jqxGrid('savestate');
+            })
+            ;
+            $("#loadState").click(function () {
+                // load the Grid's state.
+                if (state) {
+                    $("#grid").jqxGrid('loadstate', state);
+                }
+                else {
+                    $("#grid").jqxGrid('loadstate');
+                }
+            });
+           
+        });
+   
+    </script>
+
+}
+@*<script type="text/javascript">
+        $(document).ready(function () {
+
+                //How to set this variable 'source' to my Model properties
+                  var source = {
+        dataType: "json",
+        dataFields: [
+        { name: 'SupplierName', type: 'string' },
+        { name: 'SupplierAddress', type: 'string' },
+        { name: 'SupplierMobile', type: 'string' },
+        ],
+        url: 'Supplier/GetSupplierList'
+        };
+                  var dataAdapter = new $.jqx.dataAdapter(source);
+
+                // initialize jqxGrid
+                $("#jqxgrid").jqxGrid(
+                {
+                    width: 850,
+                    source: dataAdapter,
+                    pageable: true,
+                    autoheight: true,
+                    sortable: true,
+                    altrows: true,
+                    enabletooltips: true,
+                    editable: true,
+                    selectionmode: 'multiplecellsadvanced',
+                    columns: [
+                        { text: "Name", datafield: "SupplierName" },
+                        { text: "Number", datafield: "SupplierAddress" },
+                        { text: "Address", datafield: "SupplierMobile" },
+                    ],
+                    columngroups: [
+                        { text: 'Product Details', align: 'center', name: 'SupplierName' }
+                    ]
+                });
+            });
+    </script>*@
+
+@*<script>
+
+
+
+    $(document).ready(function () {
+    // prepare the data
+    var source = {
+    dataType: "json",
+    dataFields: [
+    { name: 'SupplierName', type: 'string' },
+    { name: 'SupplierAddress', type: 'string' },
+    { name: 'SupplierMobile', type: 'string' },
+    ],
+    id: 'SupplierId',
+    url: '/Supplier/GetProducts'
+    };
+    var dataAdapter = new $.jq.dataAdapter(source);
+    // create Tree Grid
+    $("#dataTable").jqDataTable(
+    {
+    width: 850,
+    source: dataAdapter,
+    theme: 'arctic',
+    pageSize: 5,
+    sortable: true,
+    filterable: true,
+    pageable: true,
+    columns: [
+    { text: 'FirstName', dataField: 'SupplierName', width: 200 },
+    { text: 'LastName', dataField: 'SupplierAddress', width: 200 },
+    { text: 'Title', dataField: 'SupplierMobile', width: 160 },
+    //{ text: 'Birth Date', dataField: 'BirthDate', cellsFormat: 'd', width: 120 },
+    //{ text: 'Hire Date', dataField: 'HireDate', cellsFormat: 'd', width: 120 },
+    //{ text: 'Address', dataField: 'Address', width: 250 },
+    //{ text: 'City', dataField: 'City', width: 120 },
+    //{ text: 'Country', dataField: 'Country' }
+    ]
+    });
+    });</script>*@
+
+
