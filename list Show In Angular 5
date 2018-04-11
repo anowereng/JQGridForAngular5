@@ -1,0 +1,307 @@
+
+<header class="page-header">
+    <h2>@ViewBag.Title</h2>
+</header>
+<link href="~/Content/jqx.base.css" rel="stylesheet" />
+<link href="~/Content/jqx.arctic.css" rel="stylesheet" />
+<link href="~/Content/jqx.black.css" rel="stylesheet" />
+<link href="~/Content/jqx.bootstrap.css" rel="stylesheet" />
+<link href="~/Content/jqx.classic.css" rel="stylesheet" />
+<link href="~/Content/jqx.darkblue.css" rel="stylesheet" />
+<link href="~/Content/jqx.energyblue.css" rel="stylesheet" />
+<link href="~/Content/jqx.fresh.css" rel="stylesheet" />
+<link href="~/Content/jqx.highcontrast.css" rel="stylesheet" />
+<link href="~/Content/jqx.metro.css" rel="stylesheet" />
+<link href="~/Content/jqx.metrodark.css" rel="stylesheet" />
+<link href="~/Content/jqx.office.css" rel="stylesheet" />
+<link href="~/Content/jqx.orange.css" rel="stylesheet" />
+<link href="~/Content/jqx.shinyblack.css" rel="stylesheet" />
+<link href="~/Content/jqx.summer.css" rel="stylesheet" />
+<link href="~/Content/jqx.web.css" rel="stylesheet" />
+<link href="~/Content/jqx.ui-darkness.css" rel="stylesheet" />
+<link href="~/Content/jqx.ui-lightness.css" rel="stylesheet" />
+<link href="~/Content/jqx.ui-le-frog.css" rel="stylesheet" />
+
+<link href="~/Content/jqx.ui-overcast.css" rel="stylesheet" />
+<link href="~/Content/jqx.ui-redmond.css" rel="stylesheet" />
+<link href="~/Content/jqx.ui-smoothness.css" rel="stylesheet" />
+<link href="~/Content/jqx.ui-start.css" rel="stylesheet" />
+<link href="~/Content/jqx.ui-sunny.css" rel="stylesheet" />
+<link href="~/Content/bootstrap.css" rel="stylesheet" />
+<link href="~/Content/site.css" rel="stylesheet" />
+
+<link href="~/Scripts/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+<link href="~/Scripts/bootstrap-datepicker/css/datepicker.css" rel="stylesheet" />
+<script src="~/Scripts/jquery.js"></script>
+<script src="~/Scripts/bootstrap/js/bootstrap.js"></script>
+<script src="~/Scripts/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+<script src="~/Scripts/angular.js"></script>
+
+@*
+<script src="~/Scripts/jqxcore.js"></script>
+<script src="~/Scripts/jqxbuttons.js"></script>
+<script src="~/Scripts/jqxgrid.js"></script>
+<script src="~/Scripts/jqxdata.js"></script>
+<script src="~/Scripts/jqxscrollbar.js"></script>
+<script src="~/Scripts/jqxgrid.selection.js"></script>
+<script src="~/Scripts/jqxangular.js"></script>*@
+
+@*
+<script src="~/Scripts/demos.js"></script>*@
+
+
+
+<script src="~/Scripts/jqxcore.js"></script>
+<script src="~/Scripts/jqxdata.js"></script>
+<script src="~/Scripts/jqxbuttons.js"></script>
+<script src="~/Scripts/jqxscrollbar.js"></script>
+<script src="~/Scripts/jqxlistbox.js"></script>
+<script src="~/Scripts/jqxdropdownlist.js"></script>
+<script src="~/Scripts/jqxmenu.js"></script>
+<script src="~/Scripts/jqxgrid.js"></script>
+<script src="~/Scripts/jqxgrid.pager.js"></script>
+<script src="~/Scripts/jqxgrid.sort.js"></script>
+<script src="~/Scripts/jqxgrid.filter.js"></script>
+<script src="~/Scripts/jqxgrid.storage.js"></script>
+<script src="~/Scripts/jqxgrid.columnsresize.js"></script>
+<script src="~/Scripts/jqxgrid.columnsreorder.js"></script>
+<script src="~/Scripts/jqxgrid.selection.js"></script>
+<script src="~/Scripts/jqxangular.js"></script>
+<script src="~/Scripts/jqxpanel.js"></script>
+<script src="~/Scripts/jqxcheckbox.js"></script>
+<script src="~/Scripts/demos.js"></script>
+
+<!-- start:  List Voucher page -->
+
+<section class="panel" ng-app="ngApp" ng-controller="MenuPermissionctrl">
+    <header class="p-xs mr-lg">
+        <div class="row mb-md">
+            <div class="col-md-12">
+                <div class="col-md-3">
+                    @Html.Label("Voucher Type", htmlAttributes: new { @class = "control-label" })
+                    @Html.DropDownList("vType", (IEnumerable<SelectListItem>)ViewBag.vTypeList, new { @class = "form-control populate ", @Required = "required", ng_model = "vType" })
+
+                </div>
+                <div class="col-md-3">
+                    @Html.Label("Voucher Date", htmlAttributes: new { @class = "control-label" })
+                    @Html.Editor("dtFromVoucher", new { htmlAttributes = new { @class = "form-control", ng_init="dtFrom='1-Dec-17'",@placeholder = "", ng_model = "dtFrom", datepicker = "" } })
+                    {{$scope.dtFrom}}
+                </div>
+
+                <div class="col-md-3">
+                    @Html.Label("To", htmlAttributes: new { @class = "control-label" })
+                    @Html.Editor("dtToVoucher", new { htmlAttributes = new { @class = "form-control", @placeholder = "", ng_model = "dtTo", datepicker = "",ng_init="dtTo='1-Dec-18'" } })
+                    {{$scope.dtTo}}
+                </div>
+
+                <div class="col-sm-3 p-none mt-md pl-md pull-left">
+                    <input type="hidden" name="flag" class="flag" value="Load" />
+                    <input type="button" class="mb-xs mt-xs mr-xs mt-sm btn  btn-info " value="Load" ng-click="DataLoad(vType,dtFrom,dtTo)">
+                </div>
+                <input type="hidden" name="vType" ng-value="vType" />
+            </div>
+
+        </div>
+
+    </header>
+    <!-- : loading.....
+
+    <div ng-show="showLoader" class="loading" style="margin: 0px; padding: 0px; position: fixed; right: 0px; top: 0px; width: 100%; height: 100%; z-index: 30001;">
+        <img src="~/Content/assets/images/loadinghr.gif" alt="loading" style="position: absolute; top: 55%; left: 55%; width: 10%;" /> Loading..
+    </div> -->
+
+
+    <div class="panel-body">
+
+        <div class="jqx-grid-load"></div>
+
+        <header class="panel-heading p-xs mr-lg">
+            <div class="row">
+                <div class="col-md-9">
+                    <h2 class="panel-title p-xs"></h2>
+                </div>
+                <div class="col-md-3 pull-right">
+                    <input type="text" class="form-control input-sm" name="TableSearch" placeholder="Search" ng-model="searchKeyword" />
+                </div>
+            </div>
+        </header>
+        <div class="">
+            <jqx-grid jqx-settings="settings"></jqx-grid>
+        </div>
+       
+        @*<jqx-grid jqx-columns="columns" jqx-source="acclist" jqx-width="700" jqx-alt-rows="true"></jqx-grid>*@
+    </div>
+
+
+</section>
+
+
+
+<script type="text/javascript">
+    var ngApp = angular.module('ngApp', ["jqwidgets"])
+    ngApp.controller('MenuPermissionctrl', function ($scope, $http, $timeout, $interval, $filter) {
+
+        $scope.dtFrom = $filter("date")(Date.now(), 'dd-MMM-yyyy');
+        $scope.dtTo = $filter("date")(Date.now(), 'dd-MMM-yyyy');
+
+        $scope.showLoader = false;
+        $scope.vType = 'JV';
+        $scope.acclist = [{}];
+        $scope.Details = [];
+        $scope.PostData = [];
+
+        $scope.DataLoad = function (type, dtfrom, dtTo) {
+            console.log(dtfrom);
+            console.log(dtTo);
+            $scope.showLoader = true;
+            $http({
+                method: 'Post',
+                url: '../AcmVoucherPost/GetSupplierList',
+                data: JSON.stringify({ dtFrom: dtfrom, dtTo: dtTo, vType: type })
+            }).
+                then(function (data) {
+
+                    $scope.acclist = data.data;
+
+
+                }, function (error) {
+                    alert(error);
+                    console.log(error);
+                });
+        }
+
+        //$scope.settings =
+        //              {
+        //                  altrows: true,
+        //                  width: 500,
+        //                  height: 300,
+        //                  source: $scope.acclist,
+        //                  columns: [
+        //                      { text: 'VAmount', dataField: 'VAmount', width: 150 },
+        //                      { text: 'VoucherNo', dataField: 'VoucherNo', width: 200 },
+        //                      { text: 'vType', dataField: 'vType', width: 150 }
+        //                  ]
+        //              }
+        //$scope.DataLoad($scope.vType, $scope.dtFrom, $scope.dtTo); // function call with current date time  when page load
+
+        $scope.SaveAccept = function (acclist) {
+            var flag = 'accept';
+            alert($scope.vType);
+            var vtype = $scope.vType;
+            $http.post("../AcmVoucherPost/IndexUnpostNew", { acclist }).then(function (data) {
+
+                if (data.data == 1) {
+                    new PNotify({
+                        title: 'Notification',
+                        text: 'Data Saved Successfully.',
+                        type: 'custom',
+                        addclass: 'notification-success',
+                        icon: 'fa fa-check'
+                    });
+                    $scope.DataLoad($scope.vType, $scope.dtFrom, $scope.dtTo);
+                }
+                else {
+                    new PNotify({
+                        title: 'Notification',
+                        text: '!! Failure : ' + data.data,
+                        type: 'custom',
+                        addclass: 'notification-danger',
+                        icon: 'fa fa-exclamation-triangle'
+                    });
+                    $scope.DataLoad($scope.vType, $scope.dtFrom, $scope.dtTo);
+                }
+            },
+            function (responseData) {
+
+                console.log("Error !" + responseData);
+            });
+        };
+
+        $scope.GetDetails = function (Id, index) {
+
+            if (Id > 0) {
+                $http({
+                    method: 'Post',
+                    url: '../InvApprove/GetSupplierList/',
+                    data: JSON.stringify({ vId: Id })
+                }).
+                    then(function (response) {
+                        //$scope.Details[index] = [];
+                        $scope.Details[index] = response.data;
+                    });
+            }
+            else {
+                alert('Error')
+            }
+
+        }
+
+        $scope.settings =
+             {
+                 altrows: true,
+                 columnsresize: true,
+                 columnsreorder: true,
+                 showfilterrow: true,
+                 filterable: true,
+                 sortable: true,
+                 pageable: true,
+                 autoheight: true,
+                 autoloadstate: true,
+                 autosavestate: true,
+                 selectionmode: 'multiplerowsextended',
+                 width: 1000,
+                 height: 300,
+                 source: $scope.acclist,
+                 //columns: [
+                 //    { text: 'VAmount', dataField: 'VAmount', width: 150 },
+                 //    { text: 'VoucherNo', dataField: 'VoucherNo', width: 200 },
+                 //    { text: 'vType', dataField: 'vType', width: 150 },
+                 //    { text: 'EntryUser', dataField: 'EntryUser', width: 150 },
+                 //    { text: 'AccName', dataField: 'AccName', width: 400 }
+                 //]
+                 columns: [
+                { text: 'Supplier Name', datafield: 'SupplierName', width: 250 },
+                { text: 'Email', datafield: 'Email', width: 200 },
+                { text: 'Supplier Mobile', datafield: 'Mobile', width: 150 },
+                { text: 'countrySName', datafield: 'countrySName', width: 200, },
+                { text: 'CountryId', datafield: 'CountryId' },
+                { text: 'Address', datafield: 'Address', width: 200 },
+                { text: 'AccId', datafield: 'AccId' }
+                 ]
+             }
+
+    });
+
+
+    //ngApp.directive('datepicker', function ($filter) {
+    //    return {
+    //        restrict: 'A',
+    //        require: 'ngModel',
+    //        compile: function () {
+    //            return {
+    //                pre: function (scope, element, attrs, ngModelCtrl) {
+    //                    var format, dateObj;
+    //                    format = (!attrs.dpFormat) ? 'dd-M-yyyy' : attrs.dpFormat;
+    //                    if (!attrs.initDate && !attrs.dpFormat) {
+    //                        dateObj = new Date();
+    //                        scope[attrs.ngModel] = $filter("date")(dateObj, 'dd-MMM-yyyy')
+
+    //                    } else if (!attrs.initDate) {
+    //                        // Otherwise set as the init date
+    //                        scope[attrs.ngModel] = attrs.initDate;
+    //                    } else {
+    //                    }
+    //                    $(element).datepicker({
+    //                        format: format,
+    //                    }).on('changeDate', function (ev) {
+    //                        scope.$apply(function () {
+    //                            ngModelCtrl.$setViewValue(ev.format(format));
+    //                        });
+    //                    });
+    //                }
+    //            }
+    //        }
+    //    }
+    //});
+
+</script>
